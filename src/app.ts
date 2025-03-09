@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db';
 import jobRoute from './routes/jobRoute';
+import userRoute from './routes/userRoute'
 
 dotenv.config();
 connectDB();
@@ -15,5 +16,6 @@ app.use(cors({ origin: 'http://localhost:5001' }));
 
 
 app.use("/api/jobs", jobRoute);
+app.use("/api", userRoute)
 
 export default app;
