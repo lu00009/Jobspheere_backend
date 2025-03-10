@@ -11,7 +11,7 @@ export const registerUser = async(req: Request, res: Response):Promise<Response>
     email: data.email,
     password : hashedPassword,
     name : data.name
-  })
+  })        
   await newUser.save()
   const token = jwt.sign({id: newUser._id},JWT)
   const {password: userPass, ...newData} = newUser.toObject() 
@@ -30,15 +30,16 @@ export const loginUser = async(req: Request, res: Response):Promise<Response>=>{
   if(!isMatching){
     return res.status(400).json({message:"Incorrect password"})
   } 
-  else{
-    return res.status(201).json({message:"Correct password"})
- 
-  }
-    
+
+  const token = jwt.sign({id:user._id}, JWT)
+  const {password: userPass, ...data}= user.toObject() 
+  return res.json({ data, token });
+
+
 }
 
 export const protectedUser = async(req: Request, res:Response): Promise<Response>=>{
-  const user = req.body;
+  const user = req.user;
 
   return res.json({
     message: "Heyy, you have accessed the protected route",

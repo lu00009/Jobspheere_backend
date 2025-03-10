@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
 import Job from '../models/jobModels';
 
 // Create Job
@@ -30,7 +29,7 @@ export const createJob = async (req: Request, res: Response): Promise<Response> 
       currency,                    
       isBookMarked                
     });
-    console.log('Request Body:', req.body);
+    // console.log('Request Body:', req.body);
     await job.save();
     return res.status(201).json(job);
      // Make sure to return the response

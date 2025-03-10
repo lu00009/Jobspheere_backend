@@ -1,6 +1,5 @@
-import {Request} from 'express';
 import { createJob, getJobs, updateJobs, deleteJob, getJobById} from '../controllers/jobController';
-import  {validateJob}  from '../middleware/validator';
+import  {validateJob}  from '../middleware/jobValidation';
 import errorHandler from  '../middleware/errorHandler';
 const express = require('express')
 
