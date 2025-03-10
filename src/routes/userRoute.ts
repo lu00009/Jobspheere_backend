@@ -1,7 +1,7 @@
 import { registerUser, loginUser, protectedUser} from "../controllers/userController"
-import { authenticate } from "../middleware/authenticate"
-import { loginValidation, registerValidation } from "../middleware/userValidation"
-import { validate } from "../middleware/validator"
+import { authenticate } from "../middleware/authenticateMiddleware"
+import { loginValidation, registerValidation } from "../middleware/userValidationMiddleware"
+import { validate } from "../middleware/validatorMiddleware"
 const express = require('express')
 const userRouter = express.Router()
 

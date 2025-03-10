@@ -1,6 +1,6 @@
 import { createJob, getJobs, updateJobs, deleteJob, getJobById} from '../controllers/jobController';
-import  {validateJob}  from '../middleware/jobValidation';
-import errorHandler from  '../middleware/errorHandler';
+import  {validateJob}  from '../middleware/jobValidationMiddleware';
+import errorHandler from  '../middleware/errorHandlerMiddleware';
 const express = require('express')
 
 const jobRouter = express.Router();
