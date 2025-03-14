@@ -1,5 +1,5 @@
 import uploadFile from "../controllers/uploadController"
-import upload from "../middleware/uploadMiddleware"
+import upload from "../config/multer"
 const express = require('express')
 
 

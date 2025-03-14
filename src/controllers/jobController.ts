@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import Job from '../models/jobModels';
+import sharp from 'sharp';
+import path from 'path';
+import fs from 'fs';
 
 // Create Job
 export const createJob = async (req: Request, res: Response): Promise<Response> => {
@@ -11,12 +14,27 @@ export const createJob = async (req: Request, res: Response): Promise<Response> 
         location,
         salary,
         description,
-        logo,
         currency,
         type,
         experience,
         isBookMarked,
+        logo
       } = req.body;
+      const logoBuffer = req.file.buffer
+      const resizedBuffer = await sharp(logoBuffer).resize(300,300).toFormat('jpeg').toBuffer()
+
+
+      const name =`logo-${Date.now()}-${Math.round(Math.random() * 1E9)}.jpeg`
+      const filePath = path.join(__dirname, '../../uploads', name);
+
+      fs.writeFile(filePath, resizedBuffer, (error)=>{
+        if(error) {
+          console.log('error saving the file', error);
+         }
+      })
+  
+
+
     const job = new Job({
       title,
       type,
@@ -24,7 +42,7 @@ export const createJob = async (req: Request, res: Response): Promise<Response> 
       location,
       salary,
       description, 
-      logo,  
+      logo: filePath,  
       experience,            
       currency,                    
       isBookMarked                
@@ -42,7 +60,7 @@ export const createJob = async (req: Request, res: Response): Promise<Response> 
 export const getJobs = async (req: Request, res: Response): Promise<Response> => {
   try {
     const jobs = await Job.find();
-    return res.status(200).json(jobs);  // Ensure we return the response
+    return res.status(200).json(jobs);  
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

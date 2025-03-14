@@ -7,10 +7,10 @@ const jobSchema = new mongoose.Schema({
   location: { type: String, required: true },
   salary: { type: Number, required: true },
   description: { type: String, required: true },
-  logo: { type: String, required: false },
+  logo: { type: String, required: true },
   experience: { type: String, required: true },
   currency: { type: String, required: true },
-  isBookMarked: { type: Boolean, default: false },
+  isBookMarked: { type: Boolean, required: true  },
 });
 
 const Job = mongoose.model('Job', jobSchema);
