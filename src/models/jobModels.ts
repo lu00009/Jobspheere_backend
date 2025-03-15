@@ -11,6 +11,7 @@ const jobSchema = new mongoose.Schema({
   experience: { type: String, required: true },
   currency: { type: String, required: true },
   isBookMarked: { type: Boolean, required: true  },
+  postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
 const Job = mongoose.model('Job', jobSchema);

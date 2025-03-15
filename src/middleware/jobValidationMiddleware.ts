@@ -1,5 +1,5 @@
-import {body, validationResult} from 'express-validator';
-import {Request, Response, NextFunction} from 'express';
+import {body} from 'express-validator';
+
 
 export const validateJob = [
   body('title').notEmpty().withMessage('Title is required').isString().withMessage('Title must be a string'),
@@ -14,12 +14,6 @@ export const validateJob = [
 ];
 
 
-export const handleValidationErrors = (req: Request, res: Response, next: NextFunction) => {
-  const errors = validationResult(req)
-  if(!errors.isEmpty()){
-    return res.status(400).json({errors:errors.array()})
-  }
-  next()}
 
   export default validateJob
   

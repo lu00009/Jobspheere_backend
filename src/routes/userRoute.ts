@@ -1,12 +1,15 @@
-import { registerUser, loginUser, protectedUser} from "../controllers/userController"
+import { registerUser, loginUser, protectedUser, getUser, updateUser, deleteUser} from "../controllers/userController"
 import { authenticate } from "../middleware/authenticateMiddleware"
-import { loginValidation, registerValidation } from "../middleware/userValidationMiddleware"
-import { validate } from "../middleware/validatorMiddleware"
+import {errorLoginHandler, errorRegisterHandler} from "../middleware/errorHandlerMiddleware"
+import { loginValidation, registerValidation} from "../middleware/userValidationMiddleware"
 const express = require('express')
 const userRouter = express.Router()
 
-userRouter.post('/register',registerValidation,validate, registerUser)
-userRouter.post('/login', loginValidation, validate, loginUser )
+userRouter.post('/',registerValidation(), errorRegisterHandler, registerUser)
+userRouter.get('/', getUser)
+userRouter.put('/:id', updateUser)
+userRouter.delete('/:id', deleteUser)
+userRouter.post('/login', loginValidation(),errorLoginHandler, loginUser )
 userRouter.post('/protected',authenticate, protectedUser)
 
 

@@ -7,32 +7,33 @@ import fs from 'fs';
 // Create Job
 export const createJob = async (req: Request, res: Response): Promise<Response> => {
 
-    try {
-      const {
-        title,
-        company,
-        location,
-        salary,
-        description,
-        currency,
-        type,
-        experience,
-        isBookMarked,
-        logo
-      } = req.body;
-      const logoBuffer = req.file.buffer
-      const resizedBuffer = await sharp(logoBuffer).resize(300,300).toFormat('jpeg').toBuffer()
+  try {
+    const {
+      title,
+      company,
+      location,
+      salary,
+      description,
+      currency,
+      type,
+      experience,
+      isBookMarked,
+      logo,
+      postedBy
+    } = req.body;
+    const logoBuffer = req.file.buffer
+    const resizedBuffer = await sharp(logoBuffer).resize(300, 300).toFormat('jpeg').toBuffer()
 
 
-      const name =`logo-${Date.now()}-${Math.round(Math.random() * 1E9)}.jpeg`
-      const filePath = path.join(__dirname, '../../uploads', name);
+    const name = `logo-${Date.now()}-${Math.round(Math.random() * 1E9)}.jpeg`
+    const filePath = path.join(__dirname, '../../uploads', name);
 
-      fs.writeFile(filePath, resizedBuffer, (error)=>{
-        if(error) {
-          console.log('error saving the file', error);
-         }
-      })
-  
+    fs.writeFile(filePath, resizedBuffer, (error) => {
+      if (error) {
+        console.log('error saving the file', error);
+      }
+    })
+
 
 
     const job = new Job({
@@ -41,16 +42,17 @@ export const createJob = async (req: Request, res: Response): Promise<Response> 
       company,
       location,
       salary,
-      description, 
-      logo: filePath,  
-      experience,            
-      currency,                    
-      isBookMarked                
+      description,
+      logo: filePath,
+      experience,
+      currency,
+      isBookMarked,
+      postedBy: req.user._id
     });
     // console.log('Request Body:', req.body);
     await job.save();
     return res.status(201).json(job);
-     // Make sure to return the response
+
   } catch (err) {
     return res.status(500).json({ error: err.message || 'Error posting job' });
   }
@@ -60,7 +62,7 @@ export const createJob = async (req: Request, res: Response): Promise<Response> 
 export const getJobs = async (req: Request, res: Response): Promise<Response> => {
   try {
     const jobs = await Job.find();
-    return res.status(200).json(jobs);  
+    return res.status(200).json(jobs);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

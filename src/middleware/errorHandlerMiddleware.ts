@@ -1,27 +1,33 @@
 import { Request, Response, NextFunction } from "express";
+import { validationResult } from "express-validator";
 
-interface ErrorResponse {
-  message: string;
-  stack?: string;
-}
+export const errorRegisterHandler = (req: Request, res: Response, next: NextFunction) => {
+  const errors = validationResult(req);
 
-const errorHandler = (
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-  const response: ErrorResponse = {
-    message: err.message,
-  };
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  next()
+};
+export const errorLoginHandler = (req: Request, res: Response, next: NextFunction) => {
+  const errors = validationResult(req);
 
-  // Include stack trace in development
-  if (process.env.NODE_ENV === "development") {
-    response.stack = err.stack;
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
   }
 
-  res.status(statusCode).json(response);
+  res.json({ message: "User logged successfully" })
+  next()
+};
+export const errorJobHandler = (req: Request, res: Response, next: NextFunction) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  next()
 };
 
-export default errorHandler;
+
+
