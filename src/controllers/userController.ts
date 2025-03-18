@@ -79,12 +79,12 @@ export const deleteUser = async (req: Request, res: Response): Promise<Response>
 
 
 
-export const protectedUser = async(req: Request, res:Response): Promise<Response>=>{
-  const user = req.user;
+export const protectedUser = async(req: Request, res:Response): Promise<any>=>{
+  // const user = req.user;
 
   return res.json({
     message: "Heyy, you have accessed the protected route",
-    user,
+    // user,
   });
 }
 

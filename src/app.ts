@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './config/db';
 import jobRoute from './routes/jobRoute';
-import userRoute from './routes/userRoute'
+import userRouter from './routes/userRoute';
+import { oauthRouter } from './routes/oauthRoute';
 
 
 connectDB();
@@ -15,7 +16,8 @@ app.use(cors({ origin: 'http://localhost:3002' }));
 
 
 app.use("/api/jobs", jobRoute);
-app.use("/api/users", userRoute)
-app.use('/uploads/:path', express.static('../uploads'))
+app.use("/api/users", userRouter)
+app.use("/oauth",oauthRouter)
+// app.use('/uploads/:path', express.static('../uploads'))
 
 export default app;

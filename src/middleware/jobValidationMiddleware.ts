@@ -1,4 +1,4 @@
-import {body} from 'express-validator';
+import { body } from 'express-validator';
 
 
 export const validateJob = [
@@ -15,5 +15,4 @@ export const validateJob = [
 
 
 
-  export default validateJob
-  
+export default validateJob

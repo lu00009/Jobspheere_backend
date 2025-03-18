@@ -1,25 +1,40 @@
 import mongoose from "mongoose";
+import { OAuthProvider } from "../oauth/providers/provider";
+
+export enum UserRole {
+  admin = "admin",
+  user = "user",
+}
 
 const userSchema = new mongoose.Schema({
-  email:{
+  email: {
     type: String,
-    required : true,
-    unique : true 
+    required: true,
+    unique: false,
   },
-  password:{
+  name: {
     type: String,
-    required : true
+    required: false,
   },
-  name : {
+  role: {
     type: String,
-    required: true
+    required: true,
+    enum: Object.values(UserRole),
+    default: UserRole.user,
   },
-  role:{
+  password: {
     type: String,
-    required : true,
-    enum: ["user","admin"],
-    default : "user"
-  }
-})
+    required: false,
+  },
+  accounts: {
+    type: [
+      {
+        provider: { type: String, required: true },
+        providerId: { type: String, required: true },
+      },
+    ],
+    default: [],
+  },
+});
 
-export const User = mongoose.model("User", userSchema) 
+export const User = mongoose.model("User", userSchema);

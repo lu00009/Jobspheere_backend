@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-dotenv.config(); 
-export const JWT = process.env.JWT_SECRET;
+dotenv.config();
+
+export const redirectURL = process.env.OAUTH_REDIRECT_URL_BASE
+
+export const JWT = process.env.JWT_SECRET_KEY;
 const connectDB = async () => {
   try {
     const mongoURI = process.env.MONGO_URI;
