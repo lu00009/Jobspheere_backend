@@ -28,18 +28,18 @@ export const connectUserToAccount = async (
   }
 
   // Check if provider is already linked
-  const isProviderLinked = existUser.accounts.some(
-    (account) => account.provider === provider.provider
-  );
+  // const isProviderLinked = existUser.accounts.some(
+  //   (account) => account.provider === provider.provider
+  // );
 
-  if (!isProviderLinked) {
-    // Add provider if it's not linked
-    existUser = await authdb.user.findOneAndUpdate(
-      { email: user.email },
-      { $push: { accounts: { provider: provider.provider, providerId: provider.providerId } } },
-      { new: true } // Return the updated document
-    );
-  }
+  // if (!isProviderLinked) {
+  //   // Add provider if it's not linked
+  //   existUser = await authdb.user.findOneAndUpdate(
+  //     { email: user.email },
+  //     { $push: { accounts: { provider: provider.provider, providerId: provider.providerId } } },
+  //     { new: true } // Return the updated document
+  //   );
+  // }
 
   return existUser;
 };

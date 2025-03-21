@@ -61,7 +61,7 @@ export class OAuthClient<T>{
 
   private async fetchToken(code: string) {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000); // Timeout after 5 seconds
+    const timeout = setTimeout(() => controller.abort(), 10000); 
   
     try {
       const res = await fetch(this.urls.token, {
@@ -77,10 +77,10 @@ export class OAuthClient<T>{
           client_id: this.clientId,
           client_secret: this.clientSecret,
         }),
-        signal: controller.signal, // Attach the abort signal to the fetch request
+        signal: controller.signal, 
       });
     
-      clearTimeout(timeout); // Clear timeout once the request is complete
+      clearTimeout(timeout); 
     
       // Check if the response is successful
       if (!res.ok) {
@@ -111,7 +111,7 @@ export class OAuthClient<T>{
         throw new Error("An error occurred while fetching the token");
       }
     } finally {
-      clearTimeout(timeout); // Ensure timeout is always cleared
+      clearTimeout(timeout); 
     }
     
   }
